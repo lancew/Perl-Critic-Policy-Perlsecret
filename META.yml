@@ -1,0 +1,37 @@
+---
+abstract: 'Prevent Perlsecret operators and constants making it into your code.'
+author:
+  - 'Lance Wicks <lancew@cpan.org>'
+build_requires:
+  File::Spec: '0'
+  Test::Deep: '0'
+  Test::FailWarnings: '0'
+  Test::More: '0'
+  Test::Perl::Critic::Policy: '0'
+configure_requires:
+  Module::Build: '0'
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4205, CPAN::Meta::Converter version 2.140640'
+license: gpl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Perl-Critic-Policy-Perlsecret
+provides:
+  Perl::Critic::Policy::Perlsecret:
+    file: lib/Perl/Critic/Policy/Perlsecret.pm
+    version: v0.0.1
+requires:
+  Carp: '0'
+  Perl::Critic::Policy: '0'
+  Perl::Critic::Utils: '0'
+  Readonly: '0'
+  String::InterpolatedVariables: '0'
+  Try::Tiny: '0'
+  perl: '5.006'
+resources:
+  bugtracker: https://github.com/lancew/Perl-Critic-Policy-Perlsecret/issues
+  homepage: https://metacpan.org/release/Perlsecret
+  license: http://www.gnu.org/licenses/gpl-3.0.txt
+  repository: https://github.com/lancew/Perl-Critic-Policy-Perlsecret
+version: v0.0.1
