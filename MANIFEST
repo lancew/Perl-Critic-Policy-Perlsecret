@@ -15,7 +15,7 @@ lib/Perl/Critic/Policy/Perlsecret.pm
 t/00-load.t
 t/30-policy.t
 t/35-default_themes.t
-t/ValuesAndExpressions/PreventSQLInjection.run
+t/ValuesAndExpressions/Perlsecret.run
 xt/changes.t
 xt/kwalitee.t
 xt/manifest.t

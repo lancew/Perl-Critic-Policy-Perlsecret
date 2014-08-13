@@ -22,7 +22,7 @@ WriteMakefile
   'EXE_FILES' => [],
   'PL_FILES' => {},
   'test' => {
-              'TESTS' => 't/*.t t/ValuesAndExpressions/*.t'
+              'TESTS' => 't/*.t t/Perlsecret/*.t'
             }
 )
 ;
