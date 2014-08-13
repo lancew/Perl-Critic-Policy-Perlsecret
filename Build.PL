@@ -38,7 +38,7 @@ my $builder = $class->new(
 	module_name          => 'Perl::Critic::Policy::Perlsecret',
 	license              => 'GPL_3',
 	dist_author          => q{Lance Wicks <lancew@cpan.org>},
-	dist_version_from    => 'lib/Perl/Critic/Policy/Perlcritic.pm',
+	dist_version_from    => 'lib/Perl/Critic/Policy/Perlsecret.pm',
 	build_requires       =>
 	{
 		'File::Spec'                    => 0,
