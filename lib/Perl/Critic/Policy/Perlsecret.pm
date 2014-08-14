@@ -9,9 +9,6 @@ use base 'Perl::Critic::Policy';
 use Carp;
 use Data::Dumper;
 use Perl::Critic::Utils;
-use Readonly;
-use String::InterpolatedVariables;
-use Try::Tiny;
 
 
 =head1 NAME
