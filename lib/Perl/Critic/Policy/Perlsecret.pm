@@ -47,146 +47,33 @@ Probably many...
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
 
-# Default for the name of the methods that make a variable safe to use in SQL
-# strings.
-Readonly::Scalar my $QUOTING_METHODS_DEFAULT => q|
-	quote_identifier
-	quote
-|;
-
-# Default for the name of the packages and functions / class methods that are safe to
-# concatenate to SQL strings.
-Readonly::Scalar my $SAFE_FUNCTIONS_DEFAULT => q|
-|;
-
-# Regex to detect comments like ## SQL safe ($var1, $var2).
-Readonly::Scalar my $SQL_SAFE_COMMENTS_REGEX => qr/
-	\A
-	(?: [#]! .*? )?
-	\s*
-	# Find the ## annotation starter.
-	[#][#]
-	\s*
-	# "SQL safe" is our keyword.
-	SQL \s+ safe
-	\s*
-	# List of safe variables between parentheses.
-	\(\s*(.*?)\s*\)
-/ixms;
-
-
-=head1 FUNCTIONS
-
-=head2 supported_parameters()
-
-Return an array with information about the parameters supported.
-
-	my @supported_parameters = $policy->supported_parameters();
-
-=cut
-
-sub supported_parameters
-{
-	return (
-		{
-			name            => 'quoting_methods',
-			description     => 'A space-separated string listing the methods that return a safely quoted value.',
-			default_string  => $QUOTING_METHODS_DEFAULT,
-			behavior        => 'string',
-		},
-		{
-			name            => 'safe_functions',
-			description     => 'A space-separated string listing the functions that return a safely quoted value',
-			default_string  => $SAFE_FUNCTIONS_DEFAULT,
-			behavior        => 'string',
-		},
-	);
-}
-
-
-=head2 default_severity()
-
-Return the default severify for this policy.
-
-	my $default_severity = $policy->default_severity();
-
-=cut
-
 sub default_severity
 {
 	return $Perl::Critic::Utils::SEVERITY_HIGHEST;
 }
 
-
-=head2 default_themes()
-
-Return the default themes this policy is included in.
-
-	my $default_themes = $policy->default_themes();
-
-=cut
-
 sub default_themes
 {
-	return qw( security );
+	return qw( perlsecret );
 }
-
-
-=head2 applies_to()
-
-Return the class of elements this policy applies to.
-
-	my $class = $policy->applies_to();
-
-=cut
 
 sub applies_to
 {
 	return qw(
-		PPI::Token::Quote
-		PPI::Token::HereDoc
+		PPI::Token::Operator
 	);
 }
 
-
-=head2 violates()
-
-Check an element for violations against this policy.
-
-	my $policy->violates(
-		$element,
-		$document,
-	);
-
-=cut
-
 sub violates
 {
-	my ( $self, $element, $doc ) = @_;
+    my ( $self, $element, $doc ) = @_;
 
-	parse_config_parameters( $self );
+    # Initial test for the Venus operator.
 
-	parse_comments( $self, $doc );
-
-	# Make sure the first string looks like a SQL statement before investigating
-	# further.
-	return ()
-		if !is_sql_statement( $element );
-
-	# Find SQL injection vulnerabilities.
-	my $sql_injections = detect_sql_injections( $self, $element );
-
-	# Return violations if any.
-	return defined( $sql_injections ) && scalar( @$sql_injections ) != 0
-		? $self->violation(
-			$DESCRIPTION,
-			sprintf(
-				$EXPLANATION,
-				join( ', ', @$sql_injections ),
-			),
-			$element,
-		)
-		: ();
+    if ( $element =~ /0\+/ )
+    {	
+        return $self->violation($DESCRIPTION, $EXPLANATION, $element);	
+    }
 }
 
 
