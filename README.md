@@ -4,11 +4,11 @@ Perl-Critic-Policy-Perlsecret
 [![Build Status](https://travis-ci.org/lancew/Perl-Critic-Policy-Perlsecret.png?branch=master)](https://travis-ci.org/lancew/Perl-Critic-Policy-Perlsecret)
 [![Coverage Status](https://coveralls.io/repos/lancew/Perl-Critic-Policy-Perlsecret/badge.png?branch=master)](https://coveralls.io/r/lancew/Perl-Critic-Policy-Perlsecret?branch=master)
 
-Perlcritic policy to prevent the "interesting" operators and constants from perlsecret.
+Perlcritic policy to prevent the "interesting" operators and constants from [perlsecret](https://metacpan.org/pod/distribution/perlsecret/lib/perlsecret.pod).
 
-Inspired by jraspass and code modelled on Perl::Critic::Policy::ValuesAndExpressions::PreventSQLInjection 
+Inspired by [jraspass](https://github.com/JRaspass) and code modelled on Perl::Critic::Policy::ValuesAndExpressions::PreventSQLInjection 
 
-Inspration fostered on quest.io
+Inspration fostered on [questhub.io](https://questhub.io/realm/perl/quest/528cf35f9f567a6a0700006a)
 
 INSTALLATION
 ------------
