@@ -76,14 +76,13 @@ sub violates
         'Bang Bang' => qr/!!/,
         # Eskimo Greeting skipped as only used in one liners
         'Inchworm' => qr/~~/,
+        'Inchworm on a stick' => qr/~-|-~/
     );
 
     for my $policy ( keys %violations )
     {
-        warn "Policy: $policy";
         if ( $element =~ $violations{$policy} )
         {
-            warn "Policy: $policy detected";
             return $self->violation($DESCRIPTION . " $policy ", $EXPLANATION, $element);
         }
     }

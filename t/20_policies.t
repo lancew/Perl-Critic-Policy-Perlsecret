@@ -32,6 +32,13 @@ print ~~$x;
 __CODE__
 is pcritique('Perlsecret', \$code), 1;
 
+# Inch worm on a stick
+$code = <<'__CODE__';
+$y = ~-$x * 4;
+$y = -~$x * 4;
+__CODE__
+is pcritique('Perlsecret', \$code), 2;
+
 
 done_testing;
 
