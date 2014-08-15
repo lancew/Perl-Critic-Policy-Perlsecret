@@ -74,7 +74,14 @@ sub violates
     {
         return $self->violation($DESCRIPTION, $EXPLANATION, $element);
     }
-    return;
+
+    # Baby cart
+    if ( $element =~ /@\{\[.*\]\}/ )
+    {
+        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
+    }
+
+    return;  # No matches return i.e. no violations
 }
 
 
