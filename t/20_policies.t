@@ -1,13 +1,32 @@
-use Perl::Critic;
+use strict;
+use warnings;
 use Test::More;
+use Perl::Critic::TestUtils qw( pcritique );
 
-my $critic = Perl::Critic->new;
-$critic->add_policy(-policy => "Perl::Critic::Policy::Perlsecret");
 
-my @v      = $critic->critique("t/Perlsecret/Perlsecret.run");
+my $code = <<'__CODE__';
+    print 0+ '23a';
+}
+__CODE__
 
-ok @v == 2;
-like $v[0], qr/Perlsecret/;
+is pcritique('Perlsecret', \$code), 1;
+
+$code = <<'__CODE__';
+for ( @{[ qw( 1 2 3 ) ]} ) {
+    $_ = $_ * $_;    # contrived
+    print "square: $_\n";
+}
+__CODE__
+
+is pcritique('Perlsecret', \$code), 2;
+
+
+
+
+
+
+
+
 
 done_testing;
 
