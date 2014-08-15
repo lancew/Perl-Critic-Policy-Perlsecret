@@ -77,7 +77,7 @@ sub violates
         # Eskimo Greeting skipped as only used in one liners
         'Inchworm' => qr/~~/,
         'Inchworm on a stick' => qr/~-|-~/,
-        'Space Station' => qr/-+-/,
+        'Space Station' => qr/-\+-/,
     );
 
     for my $policy ( keys %violations )
