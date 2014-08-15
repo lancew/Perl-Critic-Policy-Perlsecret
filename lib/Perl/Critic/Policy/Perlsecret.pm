@@ -81,6 +81,13 @@ sub violates
         return $self->violation($DESCRIPTION, $EXPLANATION, $element);
     }
 
+    # Bang Bang
+    if ( $element =~ /!!/ )
+    {
+        $self->violation($DESCRIPTION, $EXPLANATION, $element);
+    }
+
+
     return;  # No matches return i.e. no violations
 }
 

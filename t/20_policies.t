@@ -4,28 +4,27 @@ use Test::More;
 use Perl::Critic::TestUtils qw( pcritique );
 
 
+# Venus
 my $code = <<'__CODE__';
     print 0+ '23a';
 }
 __CODE__
-
 is pcritique('Perlsecret', \$code), 1;
 
+# Babycart
 $code = <<'__CODE__';
 for ( @{[ qw( 1 2 3 ) ]} ) {
     $_ = $_ * $_;    # contrived
     print "square: $_\n";
 }
 __CODE__
-
 is pcritique('Perlsecret', \$code), 2;
 
-
-
-
-
-
-
+# Bang Bang
+$code = <<'__CODE__';
+my $true  = !! 'a string';   # now 1
+__CODE__
+is pcritique('Perlsecret', \$code), 3;
 
 
 done_testing;
