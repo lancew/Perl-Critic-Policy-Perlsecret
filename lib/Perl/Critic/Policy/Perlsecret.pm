@@ -32,7 +32,7 @@ This is a standalone policy not part of a larger PerlCritic Policies group.
 
 =head1 DESCRIPTION
 
-Prevents Persecrets appearing in your codebase.
+Prevents Perlsecrets appearing in your codebase.
 
 =head1 CONFIGURATION
 
@@ -60,7 +60,7 @@ sub default_themes
 sub applies_to
 {
 	return qw(
-		PPI::Token::Operator
+		PPI::Statement
 	);
 }
 
@@ -71,9 +71,10 @@ sub violates
     # Initial test for the Venus operator.
 
     if ( $element =~ /0\+/ )
-    {	
-        return $self->violation($DESCRIPTION, $EXPLANATION, $element);	
+    {
+        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
     }
+    return;
 }
 
 
