@@ -68,26 +68,25 @@ sub violates
 {
     my ( $self, $element, $doc ) = @_;
 
-    # Initial test for the Venus operator.
-
-    if ( $element =~ /0\+/ )
+    
+    my %violations = 
     {
-        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
+        'Venus' => qr/0\+/,
+        'Baby Cart' => qr/\@\{\[.*\]\}/,
+        'Bang Bang' => qr/!!/,
+        # Eskimo Greeting skipped as only used in one liners
+        'Inchworm' => qr/~~/,
+    };
+
+    for my $policy ( keys %violations )
+    {
+        if ( $element =~ $violations{$policy} )
+        {
+            return $self->violation($DESCRIPTION . " $policy ", $EXPLANATION, $element);
+        }
     }
 
-    # Baby cart
-    if ( $element =~ /@\{\[.*\]\}/ )
-    {
-        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
-    }
-
-    # Bang Bang
-    if ( $element =~ /!!/ )
-    {
-        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
-    }
-
-
+    
     return;  # No matches return i.e. no violations
 }
 
