@@ -13,10 +13,7 @@ is pcritique('Perlsecret', \$code), 1;
 
 # Babycart
 $code = <<'__CODE__';
-for ( @{[ qw( 1 2 3 ) ]} ) {
-    $_ = $_ * $_;    # contrived
-    print "square: $_\n";
-}
+for ( @{[ qw( 1 2 3 ) ]} ) { return $_ }
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
@@ -24,7 +21,7 @@ is pcritique('Perlsecret', \$code), 2;
 $code = <<'__CODE__';
 my $true  = !! 'a string';   # now 1
 __CODE__
-is pcritique('Perlsecret', \$code), 3;
+is pcritique('Perlsecret', \$code), 1;
 
 
 done_testing;
