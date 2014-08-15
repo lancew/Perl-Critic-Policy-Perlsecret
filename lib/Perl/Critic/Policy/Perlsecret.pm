@@ -80,8 +80,10 @@ sub violates
 
     for my $policy ( keys %violations )
     {
+        warn "Policy: $policy";
         if ( $element =~ $violations{$policy} )
         {
+            warn "Policy: $policy detected";
             return $self->violation($DESCRIPTION . " $policy ", $EXPLANATION, $element);
         }
     }
