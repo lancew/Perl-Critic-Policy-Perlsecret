@@ -23,6 +23,15 @@ my $true  = !! 'a string';   # now 1
 __CODE__
 is pcritique('Perlsecret', \$code), 1;
 
+# Eskimo Greeting - SKipped as only used in one liners
+
+# Inch worm
+$code = <<'__CODE__';
+$x = 1.23;
+print ~~$x;
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
 
 done_testing;
 
