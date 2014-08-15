@@ -39,6 +39,12 @@ $y = -~$x * 4;
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
+# Space Station
+$code = <<'__CODE__';
+print -+- '23a';
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
 
 done_testing;
 
