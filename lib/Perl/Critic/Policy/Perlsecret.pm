@@ -84,7 +84,7 @@ sub violates
     # Bang Bang
     if ( $element =~ /!!/ )
     {
-        $self->violation($DESCRIPTION, $EXPLANATION, $element);
+        return $self->violation($DESCRIPTION, $EXPLANATION, $element);
     }
 
 
