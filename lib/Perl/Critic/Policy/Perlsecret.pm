@@ -70,13 +70,13 @@ sub violates
 
     
     my %violations = 
-    {
+    (
         'Venus' => qr/0\+/,
         'Baby Cart' => qr/\@\{\[.*\]\}/,
         'Bang Bang' => qr/!!/,
         # Eskimo Greeting skipped as only used in one liners
         'Inchworm' => qr/~~/,
-    };
+    );
 
     for my $policy ( keys %violations )
     {
