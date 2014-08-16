@@ -10,7 +10,6 @@ WriteMakefile
                    'File::Spec' => 0,
                    'Perl::Critic::Policy' => 0,
                    'Perl::Critic::Utils' => 0,
-                   'Readonly' => 0,
                    'Test::Deep' => 0,
                    'Test::FailWarnings' => 0,
                    'Test::More' => 0,

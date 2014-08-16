@@ -53,9 +53,6 @@ my $builder = $class->new(
 		'Carp'                          => 0,
 		'Perl::Critic::Policy'          => 0,
 		'Perl::Critic::Utils'           => 0,
-		'Readonly'                      => 0,
-		'Try::Tiny'                     => 0,
-		'String::InterpolatedVariables' => 0,
 	},
 	add_to_cleanup       =>
 	[
