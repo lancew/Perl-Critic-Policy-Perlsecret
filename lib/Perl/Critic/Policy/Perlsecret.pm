@@ -64,41 +64,35 @@ sub applies_to
 	);
 }
 
-sub violates
-{
+sub violates {
     my ( $self, $element, $doc ) = @_;
-
-    
-    my %violations = 
-    (
-        'Venus' 			=> qr/0\+/,
-        'Baby Cart' 			=> qr/\@\{\[.*\]\}/,
-        'Bang Bang' 			=> qr/!!/,
-        # Eskimo Greeting skipped as only used in one liners
-        'Inchworm' 			=> qr/~~/,
-        'Inchworm on a stick' 		=> qr/~-|-~/,
-        'Space Station' 		=> qr/-\+-/,
-        'Goatse' 			=> qr/=\(.*\)=/,
-        'Flaming X-Wing' 		=> qr/=<.*>=~/,
-        'Kite' 				=> qr/~~<>/,
-        'Ornate Double Edged Sword' 	=> qr/<<m=~m>>/,
-        'Flathead' 			=> qr/-=!!|-=!/,
-        'Phillips' 			=> qr/+=!!|+=!/,
-        'Torx' 				=> qr/*=!!|*=!/,
-        'Pozidriv' 			=> qr/x=!!|x=!/,
-	'Winking fat comma'		=> qr/,=>/,
+    # Eskimo Greeting skipped as only used in one liners
+    my %violations = (
+        'Venus'     => qr/0\+/,
+        'Baby Cart' => qr/\@\{\[.*\]\}/,
+        'Bang Bang' => qr/!!/,
+        'Inchworm'                  => qr/~~/,
+        'Inchworm on a stick'       => qr/~-|-~/,
+        'Space Station'             => qr/-\+-/,
+        'Goatse'                    => qr/=\(.*\)=/,
+        'Flaming X-Wing'            => qr/=<.*>=~/,
+        'Kite'                      => qr/~~<>/,
+        'Ornate Double Edged Sword' => qr/<<m=~m>>/,
+        'Flathead'                  => qr/-=!!|-=!/,
+        'Phillips'                  => qr/\+=!!|\+=!/,
+        'Torx'                      => qr/\*=!!|\*=!/,
+        'Pozidriv'                  => qr/x=!!|x=!/,
+        'Winking fat comma'         => qr/,=>/,
     );
 
-    for my $policy ( keys %violations )
-    {
-        if ( $element =~ $violations{$policy} )
-        {
-            return $self->violation($DESCRIPTION . " $policy ", $EXPLANATION, $element);
+    for my $policy ( keys %violations ) {
+        if ( $element =~ $violations{$policy} ) {
+            return $self->violation( $DESCRIPTION . " $policy ",
+                $EXPLANATION, $element );
         }
     }
 
-    
-    return;  # No matches return i.e. no violations
+    return;    # No matches return i.e. no violations
 }
 
 
