@@ -71,19 +71,22 @@ sub violates
     
     my %violations = 
     (
-        'Venus' => qr/0\+/,
-        'Baby Cart' => qr/\@\{\[.*\]\}/,
-        'Bang Bang' => qr/!!/,
+        'Venus' 			=> qr/0\+/,
+        'Baby Cart' 			=> qr/\@\{\[.*\]\}/,
+        'Bang Bang' 			=> qr/!!/,
         # Eskimo Greeting skipped as only used in one liners
-        'Inchworm' => qr/~~/,
-        'Inchworm on a stick' => qr/~-|-~/,
-        'Space Station' => qr/-\+-/,
-        'Goatse' => qr/=\(.*\)=/,
-        'Flaming X-Wing' => qr/=<.*>=~/,
-        'Kite' => qr/~~<>/,
-        'Ornate Double Edged Sword' => qr/<<m=~m>>/,
-        'Flathead' => qr/-=!!|-=!/,
-
+        'Inchworm' 			=> qr/~~/,
+        'Inchworm on a stick' 		=> qr/~-|-~/,
+        'Space Station' 		=> qr/-\+-/,
+        'Goatse' 			=> qr/=\(.*\)=/,
+        'Flaming X-Wing' 		=> qr/=<.*>=~/,
+        'Kite' 				=> qr/~~<>/,
+        'Ornate Double Edged Sword' 	=> qr/<<m=~m>>/,
+        'Flathead' 			=> qr/-=!!|-=!/,
+        'Phillips' 			=> qr/+=!!|+=!/,
+        'Torx' 				=> qr/*=!!|*=!/,
+        'Pozidriv' 			=> qr/x=!!|x=!/,
+	'Winking fat comma'		=> qr/,=>/,
     );
 
     for my $policy ( keys %violations )
