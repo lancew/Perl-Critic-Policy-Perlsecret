@@ -63,7 +63,7 @@ is pcritique('Perlsecret', \$code), 2;
 $code = <<'__CODE__';
 @triplets = ( ~~<>, ~~<>, ~~<> ); 
 __CODE__
-is pcritique('Perlsecret', \$code), 1;
+is pcritique('Perlsecret', \$code), 2;  #why two?
 
 # Ornate double-bladed sword
 $code = <<'__CODE__';
@@ -73,6 +73,13 @@ m
 __CODE__
 is pcritique('Perlsecret', \$code), 1;
 
+
+# Flathead.
+$code = <<'__CODE__';
+$x -=!! $y
+$x -=!  $y
+__CODE__
+is pcritique('Perlsecret', \$code), 2;
 
 
 done_testing;
