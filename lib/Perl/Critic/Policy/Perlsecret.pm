@@ -68,7 +68,7 @@ sub violates {
     my ( $self, $element, $doc ) = @_;
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'                     => qr/\b0\+\b/,   #\b so it does not match K.O.T.
+        'Venus'                     => qr/\s0\+\s/,   #\b so it does not match K.O.T.
         'Baby Cart'                 => qr/\@\{\[.*\]\}/,
         'Bang Bang'                 => qr/!!/,
         'Inchworm'                  => qr/~~/,
