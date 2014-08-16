@@ -68,9 +68,9 @@ sub violates {
     my ( $self, $element, $doc ) = @_;
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'     => qr/0\+/,
-        'Baby Cart' => qr/\@\{\[.*\]\}/,
-        'Bang Bang' => qr/!!/,
+        'Venus'                     => qr/\b0\+\b/,   #\b so it does not match K.O.T.
+        'Baby Cart'                 => qr/\@\{\[.*\]\}/,
+        'Bang Bang'                 => qr/!!/,
         'Inchworm'                  => qr/~~/,
         'Inchworm on a stick'       => qr/~-|-~/,
         'Space Station'             => qr/-\+-/,
@@ -84,6 +84,9 @@ sub violates {
         'Pozidriv'                  => qr/x=!!|x=!/,
         'Winking fat comma'         => qr/,=>/,
         'Enterprise'                => qr/\(.*\)x!!/,
+        'Key of truth'              => qr/0\+!!/, 
+        'Abbott and Costello'       => qr/\|\|\(\)/,
+        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
     );
 
     for my $policy ( keys %violations ) {
