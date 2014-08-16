@@ -48,8 +48,9 @@ is pcritique('Perlsecret', \$code), 1;
 # Goatse
 $code = <<'__CODE__';
 $n =()= "abababab" =~ /a/;
+$n =($b)= "abababab" =~ /a/g;
 __CODE__
-is pcritique('Perlsecret', \$code), 1;
+is pcritique('Perlsecret', \$code), 2;
 
 
 

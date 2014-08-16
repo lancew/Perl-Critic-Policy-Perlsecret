@@ -78,6 +78,7 @@ sub violates
         'Inchworm' => qr/~~/,
         'Inchworm on a stick' => qr/~-|-~/,
         'Space Station' => qr/-\+-/,
+        'Goatse' => qr/=\(.*\)=/,
     );
 
     for my $policy ( keys %violations )
