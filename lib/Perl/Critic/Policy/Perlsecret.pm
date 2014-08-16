@@ -49,19 +49,19 @@ Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
 
 sub default_severity
 {
-	return $Perl::Critic::Utils::SEVERITY_HIGHEST;
+    return $Perl::Critic::Utils::SEVERITY_HIGHEST;
 }
 
 sub default_themes
 {
-	return qw( perlsecret );
+    return qw( perlsecret );
 }
 
 sub applies_to
 {
-	return qw(
-		PPI::Statement
-	);
+    return qw(
+        PPI::Statement
+    );
 }
 
 sub violates {
@@ -110,7 +110,7 @@ your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-	perldoc Perl::Critic::Policy::Perlsecret
+    perldoc Perl::Critic::Policy::Perlsecret
 
 
 You can also look for information at:

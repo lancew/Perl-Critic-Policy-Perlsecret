@@ -110,7 +110,7 @@ $code = <<'__CODE__';
   BANANA  ,=>  "yellow",
 );
 __CODE__
-is pcritique('Perlsecret', \$code), 1;
+is pcritique('Perlsecret', \$code), 2;
 
 
 
