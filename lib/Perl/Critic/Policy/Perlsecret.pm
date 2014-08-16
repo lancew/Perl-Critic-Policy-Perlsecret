@@ -82,7 +82,8 @@ sub violates
         'Flaming X-Wing' => qr/=<.*>=~/,
         'Kite' => qr/~~<>/,
         'Ornate Double Edged Sword' => qr/<<m=~m>>/,
-        
+        'Flathead' => qr/-=!!|-=!/,
+
     );
 
     for my $policy ( keys %violations )
