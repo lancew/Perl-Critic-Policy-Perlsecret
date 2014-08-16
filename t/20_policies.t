@@ -125,6 +125,26 @@ my @shopping_list = (
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
+# Key of truth
+$code = <<'__CODE__';
+my $true  = 0+!! 'a string';
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+# Abbott and Costello + Leaning Abbott and Costello
+$code = <<'__CODE__';
+my @shopping_list = (
+    'bread',
+    'milk',
+    $this ||(),
+    $that //(),
+    'apples'
+);
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+
+
 done_testing;
 
 
