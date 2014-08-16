@@ -112,7 +112,18 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
-
+# Enterprise
+$code = <<'__CODE__';
+my @shopping_list = (
+    'bread',
+    'milk',
+   ('apples'   )x!! ( $cupboard{apples} < 2 ),
+   ('bananas'  )x!! ( $cupboard{bananas} < 2 ),
+   ('cherries' )x!! ( $cupboard{cherries} < 20 ),
+   ('tonic'    )x!! $cupboard{gin},
+);
+__CODE__
+is pcritique('Perlsecret', \$code), 2;
 
 done_testing;
 
