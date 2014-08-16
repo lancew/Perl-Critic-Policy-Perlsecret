@@ -45,6 +45,13 @@ print -+- '23a';
 __CODE__
 is pcritique('Perlsecret', \$code), 1;
 
+# Goatse
+$code = <<'__CODE__';
+$n =()= "abababab" =~ /a/;
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+
 
 done_testing;
 
