@@ -79,7 +79,7 @@ $code = <<'__CODE__';
 $x -=!! $y
 $x -=!  $y
 __CODE__
-is pcritique('Perlsecret', \$code), 2;
+is pcritique('Perlsecret', \$code), 1;
 
 
 done_testing;
