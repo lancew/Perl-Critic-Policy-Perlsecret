@@ -81,6 +81,38 @@ $x -=!  $y
 __CODE__
 is pcritique('Perlsecret', \$code), 1;
 
+# Phillips.
+$code = <<'__CODE__';
+$x +=!! $y
+$x +=!  $y
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+# Torx.
+$code = <<'__CODE__';
+$x *=!! $y
+$x *=!  $y
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+# Pozidriv.
+$code = <<'__CODE__';
+$x x=!! $y
+$x x=!  $y
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+# Winking fat comma
+$code = <<'__CODE__';
+%hash = (
+  APPLE   ,=>  "green",
+  CHERRY  ,=>  "red",
+  BANANA  ,=>  "yellow",
+);
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+
 
 done_testing;
 
