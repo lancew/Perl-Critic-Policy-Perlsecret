@@ -52,7 +52,11 @@ $n =($b)= "abababab" =~ /a/g;
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
-
+# Flaming X-Wing
+$code = <<'__CODE__';
+@data{@fields} =<>=~ $regexp;
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
 
 done_testing;
 
