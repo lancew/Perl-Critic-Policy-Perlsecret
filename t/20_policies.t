@@ -55,8 +55,9 @@ is pcritique('Perlsecret', \$code), 2;
 # Flaming X-Wing
 $code = <<'__CODE__';
 @data{@fields} =<>=~ $regexp;
+@data{@fields} =<$luke>=~ $regexp;
 __CODE__
-is pcritique('Perlsecret', \$code), 1;
+is pcritique('Perlsecret', \$code), 2;
 
 done_testing;
 
