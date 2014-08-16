@@ -80,6 +80,9 @@ sub violates
         'Space Station' => qr/-\+-/,
         'Goatse' => qr/=\(.*\)=/,
         'Flaming X-Wing' => qr/=<.*>=~/,
+        'Kite' => qr/~~<>/,
+        'Ornate Double Edged Sword' => qr/<<m=~m>>/,
+        
     );
 
     for my $policy ( keys %violations )
