@@ -6,7 +6,7 @@ Perl-Critic-Policy-Perlsecret
 
 Perlcritic policy to prevent the "interesting" operators and constants from [perlsecret](https://metacpan.org/pod/distribution/perlsecret/lib/perlsecret.pod).
 
-Inspired by [jraspass](https://github.com/JRaspass) and code modelled on Perl::Critic::Policy::ValuesAndExpressions::PreventSQLInjection 
+Inspired by [jraspass](https://github.com/JRaspass) and code modelled on Perl::Critic::Policy::ValuesAndExpressions::PreventSQLInjection This page helped too http://www.chrisdolan.net/madmongers/perlcritic.html
 
 Inspration fostered on [questhub.io](https://questhub.io/realm/perl/quest/528cf35f9f567a6a0700006a)
 

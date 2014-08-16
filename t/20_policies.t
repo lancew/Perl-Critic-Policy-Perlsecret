@@ -59,6 +59,22 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique('Perlsecret', \$code), 2;
 
+# Kite
+$code = <<'__CODE__';
+@triplets = ( ~~<>, ~~<>, ~~<> ); 
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+# Ornate double-bladed sword
+$code = <<'__CODE__';
+<<m=~m>>
+m
+;
+__CODE__
+is pcritique('Perlsecret', \$code), 1;
+
+
+
 done_testing;
 
 
