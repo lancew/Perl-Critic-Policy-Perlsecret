@@ -83,6 +83,7 @@ sub violates {
         'Torx'                      => qr/\*=!!|\*=!/,
         'Pozidriv'                  => qr/x=!!|x=!/,
         'Winking fat comma'         => qr/,=>/,
+        'Enterprise'                => qr/\(.*\)x!!/,
     );
 
     for my $policy ( keys %violations ) {
