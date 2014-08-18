@@ -10,7 +10,6 @@ use Carp;
 use Data::Dumper;
 use Perl::Critic::Utils;
 
-
 =head1 NAME
 
 Perl::Critic::Policy::Perlsecret - Prevent Perlsecret operators and constants.
@@ -23,7 +22,6 @@ Version 0.0.1
 =cut
 
 our $VERSION = '0.0.1';
-
 
 =head1 AFFILIATION
 
@@ -47,45 +45,43 @@ Probably many...
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
 
-sub default_severity
-{
+sub default_severity {
     return $Perl::Critic::Utils::SEVERITY_HIGHEST;
 }
 
-sub default_themes
-{
+sub default_themes {
     return qw( perlsecret );
 }
 
-sub applies_to
-{
+sub applies_to {
     return qw(
-        PPI::Statement
+      PPI::Statement
     );
 }
 
 sub violates {
     my ( $self, $element, $doc ) = @_;
+
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'                     => qr/\s0\+\s/,   #\b so it does not match K.O.T.
-        'Baby Cart'                 => qr/\@\{\[.*\]\}/,
-        'Bang Bang'                 => qr/!!/,
-        'Inchworm'                  => qr/~~/,
-        'Inchworm on a stick'       => qr/~-|-~/,
-        'Space Station'             => qr/-\+-/,
-        'Goatse'                    => qr/=\(.*\)=/,
-        'Flaming X-Wing'            => qr/=<.*>=~/,
-        'Kite'                      => qr/~~<>/,
-        'Ornate Double Edged Sword' => qr/<<m=~m>>/,
-        'Flathead'                  => qr/-=!!|-=!/,
-        'Phillips'                  => qr/\+=!!|\+=!/,
-        'Torx'                      => qr/\*=!!|\*=!/,
-        'Pozidriv'                  => qr/x=!!|x=!/,
-        'Winking fat comma'         => qr/,=>/,
-        'Enterprise'                => qr/\(.*\)x!!/,
-        'Key of truth'              => qr/0\+!!/, 
-        'Abbott and Costello'       => qr/\|\|\(\)/,
+        'Venus'     => qr/\s0\+\s/,        #\b so it does not match K.O.T.
+        'Baby Cart' => qr/\@\{\[.*\]\}/,
+        'Bang Bang' => qr/!!/,
+        'Inchworm'  => qr/~~/,
+        'Inchworm on a stick'         => qr/~-|-~/,
+        'Space Station'               => qr/-\+-/,
+        'Goatse'                      => qr/=\(.*\)=/,
+        'Flaming X-Wing'              => qr/=<.*>=~/,
+        'Kite'                        => qr/~~<>/,
+        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
+        'Flathead'                    => qr/-=!!|-=!/,
+        'Phillips'                    => qr/\+=!!|\+=!/,
+        'Torx'                        => qr/\*=!!|\*=!/,
+        'Pozidriv'                    => qr/x=!!|x=!/,
+        'Winking fat comma'           => qr/,=>/,
+        'Enterprise'                  => qr/\(.*\)x!!/,
+        'Key of truth'                => qr/0\+!!/,
+        'Abbott and Costello'         => qr/\|\|\(\)/,
         'Leaning Abbott and Costello' => qr/\/\/\(\)/,
     );
 
@@ -98,9 +94,6 @@ sub violates {
 
     return;    # No matches return i.e. no violations
 }
-
-
-
 
 =head1 BUGS
 
