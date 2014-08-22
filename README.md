@@ -3,6 +3,9 @@ Perl-Critic-Policy-Perlsecret
 
 [![Build Status](https://travis-ci.org/lancew/Perl-Critic-Policy-Perlsecret.png?branch=master)](https://travis-ci.org/lancew/Perl-Critic-Policy-Perlsecret)
 [![Coverage Status](https://coveralls.io/repos/lancew/Perl-Critic-Policy-Perlsecret/badge.png?branch=master)](https://coveralls.io/r/lancew/Perl-Critic-Policy-Perlsecret?branch=master)
+[![Kwalitee](http://cpants.cpanauthors.org/dist/Perl-Critic-Policy-Perlsecret.png)](http://cpants.cpanauthors.org/dist/Perl-Critic-Policy-Perlsecret)
+
+
 
 Perlcritic policy to prevent the "interesting" operators and constants from [perlsecret](https://metacpan.org/pod/distribution/perlsecret/lib/perlsecret.pod).
 
