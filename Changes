@@ -1,4 +1,8 @@
 Revision history for Perl-Critic-Policy-Perlsecret
 
+v0.0.3  2014-09-11
+        - Migrating to Dist::Zilla
+v0.0.2  2014-09-09
+        - Fixing some Kwalitee issues
 v0.0.1  2014-08-16
         - Initial Release

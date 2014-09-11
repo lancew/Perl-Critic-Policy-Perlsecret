@@ -7,7 +7,6 @@ use warnings;
 use base 'Perl::Critic::Policy';
 
 use Carp;
-use Data::Dumper;
 use Perl::Critic::Utils;
 
 =head1 NAME
@@ -21,7 +20,7 @@ Version 0.0.1
 
 =cut
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.0.3';
 
 =head1 AFFILIATION
 
