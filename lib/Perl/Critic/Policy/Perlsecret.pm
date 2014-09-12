@@ -1,4 +1,5 @@
 package Perl::Critic::Policy::Perlsecret;
+# ABSTRACT: Prevent perlsecrets entering your codebase
 =pod
 
 =encoding UTF-8
@@ -13,7 +14,7 @@ use 5.006001;
 use strict;
 use warnings;
 
-use base 'Perl::Critic::Policy';
+use parent 'Perl::Critic::Policy';
 
 use Carp;
 use Perl::Critic::Utils;
