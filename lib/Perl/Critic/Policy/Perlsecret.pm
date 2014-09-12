@@ -66,3 +66,4 @@ sub violates {
     return;    # No matches return i.e. no violations
 }
 
+1;
