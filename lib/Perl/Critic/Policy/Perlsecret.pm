@@ -1,5 +1,13 @@
 package Perl::Critic::Policy::Perlsecret;
-# ABSTRACT: Prevent perlsecrets entering your codebase
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Perl::Critic::Policy::Perlsecret - Prevent perlsecrets entering your codebase
+
+=cut
 
 use 5.006001;
 use strict;
@@ -67,3 +75,5 @@ sub violates {
 }
 
 1;
+
+
