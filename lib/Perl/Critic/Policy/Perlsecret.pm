@@ -20,7 +20,7 @@ use Carp;
 use Perl::Critic::Utils;
 
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
