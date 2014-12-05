@@ -20,7 +20,7 @@ use Carp;
 use Perl::Critic::Utils;
 
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
@@ -41,6 +41,9 @@ sub applies_to {
 
 sub violates {
     my ( $self, $element, $doc ) = @_;
+
+    return if ! is_assignment_operator( $element )
+
 
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
