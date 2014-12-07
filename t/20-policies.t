@@ -48,6 +48,7 @@ is pcritique( 'Perlsecret', \$code ), 1;
 $code = <<'__CODE__';
 $n =()= "abababab" =~ /a/;
 $n =($b)= "abababab" =~ /a/g;
+# print "Dist($k,$k2)=($tri+1)/($min-1)=$Dist{$k}{$k2}\n";
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2;
 

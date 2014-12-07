@@ -42,9 +42,6 @@ sub applies_to {
 sub violates {
     my ( $self, $element, $doc ) = @_;
 
-    return if ! is_assignment_operator( $element )
-
-
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
         'Venus'     => qr/\s0\+\s/,        #\b so it does not match K.O.T.
