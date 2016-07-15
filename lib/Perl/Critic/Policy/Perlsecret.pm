@@ -44,29 +44,29 @@ sub violates {
 
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'     => qr/\s0\+\s/,        #\b so it does not match K.O.T.
-        'Baby Cart' => qr/\@\{\[.*\]\}/,
-        'Bang Bang' => qr/!!/,
-        'Inchworm'  => qr/~~/,
-        'Inchworm on a stick'         => qr/~-|-~/,
-        'Space Station'               => qr/-\+-/,
-        'Goatse'                      => qr/=\(.*\)=/,
-        'Flaming X-Wing'              => qr/=<.*>=~/,
-        'Kite'                        => qr/~~<>/,
-        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
-        'Flathead'                    => qr/-=!!|-=!/,
-        'Phillips'                    => qr/\+=!!|\+=!/,
-        'Torx'                        => qr/\*=!!|\*=!/,
-        'Pozidriv'                    => qr/x=!!|x=!/,
-        'Winking fat comma'           => qr/,=>/,
-        'Enterprise'                  => qr/\(.*\)x!!/,
-        'Key of truth'                => qr/0\+!!/,
-        'Abbott and Costello'         => qr/\|\|\(\)/,
-        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
+        'Venus'     => \&_venus,
+#        'Baby Cart' => \&_baby_cart,
+#        'Bang Bang' => \&_bang_bang,
+#        'Inchworm'  => qr/~~/,
+#        'Inchworm on a stick'         => qr/~-|-~/,
+#        'Space Station'               => qr/-\+-/,
+#        'Goatse'                      => qr/=\(.*\)=/,
+#        'Flaming X-Wing'              => qr/=<.*>=~/,
+#        'Kite'                        => qr/~~<>/,
+#        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
+#        'Flathead'                    => qr/-=!!|-=!/,
+#        'Phillips'                    => qr/\+=!!|\+=!/,
+#        'Torx'                        => qr/\*=!!|\*=!/,
+#        'Pozidriv'                    => qr/x=!!|x=!/,
+#        'Winking fat comma'           => qr/,=>/,
+#        'Enterprise'                  => qr/\(.*\)x!!/,
+#        'Key of truth'                => qr/0\+!!/,
+#        'Abbott and Costello'         => qr/\|\|\(\)/,
+#        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
     );
 
     for my $policy ( keys %violations ) {
-        if ( $element =~ $violations{$policy} ) {
+        if ( $violations{$policy}->($element) ) {
             return $self->violation( $DESCRIPTION . " $policy ",
                 $EXPLANATION, $element );
         }
@@ -75,6 +75,31 @@ sub violates {
     return;    # No matches return i.e. no violations
 }
 
+sub _venus {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if $child->previous_sibling eq '0';
+        return 1 if $child->next_sibling eq '0';
+    }
+}
+
+sub _xvenus {
+
+    warn Dumper $_[0];
+    return 1 if $_[0] =~ qr/\s0\+\s/;
+    return 1 if $_[0] =~ qr/\s\+0\s/;
+}
+
+sub _baby_cart {
+    return 1 if $_[0] =~ qr/\@\{\[.*\]\}/;
+}
+
+sub _bang_bang {
+    warn '-';
+    warn $_[0];
+    return 1 if $_[0] =~ qr/!!/;
+}
+
 1;
-
-

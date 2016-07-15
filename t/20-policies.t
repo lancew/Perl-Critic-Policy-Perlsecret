@@ -3,24 +3,31 @@ use warnings;
 use Test::More;
 use Perl::Critic::TestUtils qw( pcritique );
 
+my $code;
 # Venus
-my $code = <<'__CODE__';
+$code = <<'__CODE__';
     print 0+ '23a';
+    print +0 '23a';
 }
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Venus expected';
 
 # Babycart
 $code = <<'__CODE__';
 for ( @{[ qw( 1 2 3 ) ]} ) { return $_ }
+for ( @{[
+    qw( 4 5 6)
+]})
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Baby Cart expected';
 
+=pod
 # Bang Bang
 $code = <<'__CODE__';
 my $true  = !! 'a string';   # now 1
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Bang Bang';
+
 
 # Eskimo Greeting - SKipped as only used in one liners
 
@@ -141,6 +148,7 @@ my @shopping_list = (
 );
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2;
+=cut
 
 done_testing;
 
