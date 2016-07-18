@@ -45,7 +45,7 @@ sub violates {
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
         'Venus'     => \&_venus,
-#        'Baby Cart' => \&_baby_cart,
+        'Baby Cart' => \&_baby_cart,
 #        'Bang Bang' => \&_bang_bang,
 #        'Inchworm'  => qr/~~/,
 #        'Inchworm on a stick'         => qr/~-|-~/,
@@ -85,15 +85,17 @@ sub _venus {
     }
 }
 
-sub _xvenus {
-
-    warn Dumper $_[0];
-    return 1 if $_[0] =~ qr/\s0\+\s/;
-    return 1 if $_[0] =~ qr/\s\+0\s/;
-}
-
 sub _baby_cart {
-    return 1 if $_[0] =~ qr/\@\{\[.*\]\}/;
+    for my $child ($_[0]->children)
+    {
+        if (ref($child) eq 'PPI::Token::Cast' ) {
+            return 1 if $child->snext_sibling =~ m/\{\s*?\[/;
+        }
+        if (ref($child) eq 'PPI::Token::Quote::Double') {
+            return 1 if $child =~ m/@\{\s*?\[/;
+        };
+
+    }
 }
 
 sub _bang_bang {

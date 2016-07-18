@@ -4,6 +4,7 @@ use Test::More;
 use Perl::Critic::TestUtils qw( pcritique );
 
 my $code;
+
 # Venus
 $code = <<'__CODE__';
     print 0+ '23a';
@@ -13,17 +14,23 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Venus expected';
 
-
-
-=pod
 # Babycart
 $code = <<'__CODE__';
-for ( @{[ qw( 1 2 3 ) ]} ) { return $_ }
-for ( @{[
-    qw( 4 5 6)
-]})
+my $variable = @{[ qw( 1 2 3 ) ]};
+for ( @{[ qw( 1 2 3 ) ]} ) { return $_ };
+for ( @ { [ qw( 1 2 3 ) ] } ) { return $_ };
+# baby cart @{[ ]}
+{
+    local $" = ',';
+    %got = ( 'a' .. 'f' );
+    is( "A @{[sort keys %got]} Z", "A a,c,e Z", '@{[ ]}' );
+}
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1, '1 x Baby Cart expected';
+is pcritique( 'Perlsecret', \$code ), 4, '4 x Baby Cart expected';
+#for ( @{[
+#    qw( 4 5 6)
+#]})
+=pod
 
 # Bang Bang
 $code = <<'__CODE__';
