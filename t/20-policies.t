@@ -5,7 +5,6 @@ use Perl::Critic::TestUtils qw( pcritique );
 
 my $code;
 
-
 # Venus
 $code = <<'__CODE__';
     print 0+ '23a';
@@ -37,17 +36,17 @@ my $true2 = ! ! 'another string';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Bang Bang';
 
-
 # Eskimo Greeting - SKipped as only used in one liners
 
-=pod
 # Inch worm
 $code = <<'__CODE__';
 $x = 1.23;
 print ~~$x;
+print ~ ~ $x	;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Inchworm';
 
+=pod
 # Inch worm on a stick
 $code = <<'__CODE__';
 $y = ~-$x * 4;
