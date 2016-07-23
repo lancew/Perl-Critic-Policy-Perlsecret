@@ -46,14 +46,16 @@ print ~ ~ $x	;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Inchworm';
 
-=pod
 # Inch worm on a stick
 $code = <<'__CODE__';
 $y = ~-$x * 4;
 $y = -~$x * 4;
+# $y = -~$x * 4;
+$y = - ~ $x * 4;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 3, '3 c Inchworm on a stick';
 
+=pod
 # Space Station
 $code = <<'__CODE__';
 print -+- '23a';
