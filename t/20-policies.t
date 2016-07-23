@@ -5,6 +5,7 @@ use Perl::Critic::TestUtils qw( pcritique );
 
 my $code;
 
+
 # Venus
 $code = <<'__CODE__';
     print 0+ '23a';
@@ -27,20 +28,19 @@ for ( @ { [ qw( 1 2 3 ) ] } ) { return $_ };
 }
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 4, '4 x Baby Cart expected';
-#for ( @{[
-#    qw( 4 5 6)
-#]})
-=pod
 
 # Bang Bang
 $code = <<'__CODE__';
 my $true  = !! 'a string';   # now 1
+# ignore this comment !!
+my $true2 = ! ! 'another string';
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1, '1 x Bang Bang';
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Bang Bang';
 
 
 # Eskimo Greeting - SKipped as only used in one liners
 
+=pod
 # Inch worm
 $code = <<'__CODE__';
 $x = 1.23;

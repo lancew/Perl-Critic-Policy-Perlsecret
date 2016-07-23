@@ -46,7 +46,7 @@ sub violates {
     my %violations = (
         'Venus'     => \&_venus,
         'Baby Cart' => \&_baby_cart,
-#        'Bang Bang' => \&_bang_bang,
+        'Bang Bang' => \&_bang_bang,
 #        'Inchworm'  => qr/~~/,
 #        'Inchworm on a stick'         => qr/~-|-~/,
 #        'Space Station'               => qr/-\+-/,
@@ -99,9 +99,12 @@ sub _baby_cart {
 }
 
 sub _bang_bang {
-    warn '-';
-    warn $_[0];
-    return 1 if $_[0] =~ qr/!!/;
+    use Data::Dumper;
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+        return 1 if $child eq '!' && $child->snext_sibling eq '!';
+    }
 }
 
 1;
