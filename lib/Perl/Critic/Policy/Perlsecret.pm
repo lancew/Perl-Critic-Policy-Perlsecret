@@ -49,7 +49,7 @@ sub violates {
         'Bang Bang' => \&_bang_bang,
         'Inchworm'  => \&_inchworm,
         'Inchworm on a stick'         => \&_inchworm_on_a_stick,
-#        'Space Station'               => qr/-\+-/,
+        'Space Station'               => \&_space_station,
 #        'Goatse'                      => qr/=\(.*\)=/,
 #        'Flaming X-Wing'              => qr/=<.*>=~/,
 #        'Kite'                        => qr/~~<>/,
@@ -125,6 +125,16 @@ sub _inchworm_on_a_stick {
     }
 }
 
+sub _space_station {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if $child eq '-' 
+                 && $child->snext_sibling eq '+' 
+                 && $child->snext_sibling->snext_sibling eq '-';
+    }
+}
 
 
 
