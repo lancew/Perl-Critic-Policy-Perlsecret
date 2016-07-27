@@ -63,15 +63,17 @@ print - + - '23a';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Space station';
 
-=pod
 # Goatse
 $code = <<'__CODE__';
 $n =()= "abababab" =~ /a/;
+#$n =()= "abababab" =~ /a/;
 $n =($b)= "abababab" =~ /a/g;
+$n = ( $b ) = "abababab" =~ /a/g;
 # print "Dist($k,$k2)=($tri+1)/($min-1)=$Dist{$k}{$k2}\n";
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 3, '3 x Goatse';
 
+=pod
 # Flaming X-Wing
 $code = <<'__CODE__';
 @data{@fields} =<>=~ $regexp;

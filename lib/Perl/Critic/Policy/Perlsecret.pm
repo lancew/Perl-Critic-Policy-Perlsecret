@@ -50,7 +50,7 @@ sub violates {
         'Inchworm'  => \&_inchworm,
         'Inchworm on a stick'         => \&_inchworm_on_a_stick,
         'Space Station'               => \&_space_station,
-#        'Goatse'                      => qr/=\(.*\)=/,
+        'Goatse'                      => \&_goatse,
 #        'Flaming X-Wing'              => qr/=<.*>=~/,
 #        'Kite'                        => qr/~~<>/,
 #        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
@@ -136,6 +136,12 @@ sub _space_station {
     }
 }
 
-
+sub _goatse {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Structure::List';
+        return 1 if $child->sprevious_sibling eq '=' && $child->snext_sibling eq '=';
+    }
+}
 
 1;
