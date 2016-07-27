@@ -52,7 +52,7 @@ sub violates {
         'Space Station'               => \&_space_station,
         'Goatse'                      => \&_goatse,
         'Flaming X-Wing'              => \&_flaming_x_wing,
-#        'Kite'                        => qr/~~<>/,
+        'Kite'                        => \&_kite,
 #        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
 #        'Flathead'                    => qr/-=!!|-=!/,
 #        'Phillips'                    => qr/\+=!!|\+=!/,
@@ -153,4 +153,14 @@ sub _flaming_x_wing {
                  && $child->snext_sibling eq '=~';
     }
 }
+
+sub _kite {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+        return 1 if $child eq '~~'
+                 && $child->snext_sibling eq '<>';
+    }
+}
+
 1;

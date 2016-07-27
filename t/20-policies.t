@@ -81,13 +81,13 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Flaming X-Wing';
 
-=pod
 # Kite
 $code = <<'__CODE__';
 @triplets = ( ~~<>, ~~<>, ~~<> );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;    #why two?
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Kite';
 
+=pod
 # Ornate double-bladed sword
 $code = <<'__CODE__';
 <<m=~m>>
