@@ -51,7 +51,7 @@ sub violates {
         'Inchworm on a stick'         => \&_inchworm_on_a_stick,
         'Space Station'               => \&_space_station,
         'Goatse'                      => \&_goatse,
-#        'Flaming X-Wing'              => qr/=<.*>=~/,
+        'Flaming X-Wing'              => \&_flaming_x_wing,
 #        'Kite'                        => qr/~~<>/,
 #        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
 #        'Flathead'                    => qr/-=!!|-=!/,
@@ -144,4 +144,13 @@ sub _goatse {
     }
 }
 
+sub _flaming_x_wing {
+    for my $child ($_[0]->children)
+    {
+
+        next unless ref($child) eq 'PPI::Token::QuoteLike::Readline';
+        return 1 if $child->sprevious_sibling eq '='
+                 && $child->snext_sibling eq '=~';
+    }
+}
 1;

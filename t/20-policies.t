@@ -73,14 +73,15 @@ $n = ( $b ) = "abababab" =~ /a/g;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 3, '3 x Goatse';
 
-=pod
+
 # Flaming X-Wing
 $code = <<'__CODE__';
 @data{@fields} =<>=~ $regexp;
 @data{@fields} =<$luke>=~ $regexp;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Flaming X-Wing';
 
+=pod
 # Kite
 $code = <<'__CODE__';
 @triplets = ( ~~<>, ~~<>, ~~<> );
