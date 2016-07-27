@@ -87,15 +87,19 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 1, '1 x Kite';
 
-=pod
 # Ornate double-bladed sword
 $code = <<'__CODE__';
 <<m=~m>>
+
+<<m=~m>>
+The above should not be detected
+
 m
 ;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Ornate double-bladed sword';
 
+=pod
 # Flathead.
 $code = <<'__CODE__';
 $x -=!! $y

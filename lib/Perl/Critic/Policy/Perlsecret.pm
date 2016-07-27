@@ -53,7 +53,7 @@ sub violates {
         'Goatse'                      => \&_goatse,
         'Flaming X-Wing'              => \&_flaming_x_wing,
         'Kite'                        => \&_kite,
-#        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
+        'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
 #        'Flathead'                    => qr/-=!!|-=!/,
 #        'Phillips'                    => qr/\+=!!|\+=!/,
 #        'Torx'                        => qr/\*=!!|\*=!/,
@@ -160,6 +160,15 @@ sub _kite {
         next unless ref($child) eq 'PPI::Token::Operator';
         return 1 if $child eq '~~'
                  && $child->snext_sibling eq '<>';
+    }
+}
+
+sub _ornate_double_edged_sword {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '<<m';
+        return 1 if $child->snext_sibling eq '=~'
+                 && $child->snext_sibling->snext_sibling eq 'm>>';
     }
 }
 
