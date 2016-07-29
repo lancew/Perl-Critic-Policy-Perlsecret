@@ -3,24 +3,38 @@ use warnings;
 use Test::More;
 use Perl::Critic::TestUtils qw( pcritique );
 
+my $code;
+
 # Venus
-my $code = <<'__CODE__';
+$code = <<'__CODE__';
     print 0+ '23a';
+    #print +0 '23a'; should not be detected as is a comment
+    print +0 '23a';
 }
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Venus expected';
 
 # Babycart
 $code = <<'__CODE__';
-for ( @{[ qw( 1 2 3 ) ]} ) { return $_ }
+my $variable = @{[ qw( 1 2 3 ) ]};
+for ( @{[ qw( 1 2 3 ) ]} ) { return $_ };
+for ( @ { [ qw( 1 2 3 ) ] } ) { return $_ };
+# baby cart @{[ ]}
+{
+    local $" = ',';
+    %got = ( 'a' .. 'f' );
+    is( "A @{[sort keys %got]} Z", "A a,c,e Z", '@{[ ]}' );
+}
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 4, '4 x Baby Cart expected';
 
 # Bang Bang
 $code = <<'__CODE__';
 my $true  = !! 'a string';   # now 1
+# ignore this comment !!
+my $true2 = ! ! 'another string';
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Bang Bang';
 
 # Eskimo Greeting - SKipped as only used in one liners
 
@@ -28,78 +42,91 @@ is pcritique( 'Perlsecret', \$code ), 1;
 $code = <<'__CODE__';
 $x = 1.23;
 print ~~$x;
+print ~ ~ $x	;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Inchworm';
 
 # Inch worm on a stick
 $code = <<'__CODE__';
 $y = ~-$x * 4;
 $y = -~$x * 4;
+# $y = -~$x * 4;
+$y = - ~ $x * 4;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 3, '3 x Inchworm on a stick';
 
 # Space Station
 $code = <<'__CODE__';
 print -+- '23a';
+#print -+- '23a';
+print - + - '23a';
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Space station';
 
 # Goatse
 $code = <<'__CODE__';
 $n =()= "abababab" =~ /a/;
+#$n =()= "abababab" =~ /a/;
 $n =($b)= "abababab" =~ /a/g;
+$n = ( $b ) = "abababab" =~ /a/g;
 # print "Dist($k,$k2)=($tri+1)/($min-1)=$Dist{$k}{$k2}\n";
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 3, '3 x Goatse';
+
 
 # Flaming X-Wing
 $code = <<'__CODE__';
 @data{@fields} =<>=~ $regexp;
 @data{@fields} =<$luke>=~ $regexp;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Flaming X-Wing';
 
 # Kite
 $code = <<'__CODE__';
 @triplets = ( ~~<>, ~~<>, ~~<> );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;    #why two?
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Kite';
 
 # Ornate double-bladed sword
 $code = <<'__CODE__';
 <<m=~m>>
+
+<<m=~m>>
+The above should not be detected
+
 m
 ;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Ornate double-bladed sword';
 
 # Flathead.
 $code = <<'__CODE__';
-$x -=!! $y
-$x -=!  $y
+$x -=!! $y;
+# $x -=!  $y;
+$x -=!  $y;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Flathead';
 
 # Phillips.
 $code = <<'__CODE__';
-$x +=!! $y
-$x +=!  $y
+$x +=!! $y;
+$x +=!  $y;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Phillips';
 
 # Torx.
 $code = <<'__CODE__';
-$x *=!! $y
-$x *=!  $y
+$x *=!! $y;
+$x *=!  $y;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Torx';
 
 # Pozidriv.
 $code = <<'__CODE__';
-$x x=!! $y
-$x x=!  $y
+$x x=!! $y;
+$x x=!  $y;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Pozidriv';
 
 # Winking fat comma
 $code = <<'__CODE__';
@@ -109,7 +136,7 @@ $code = <<'__CODE__';
   BANANA  ,=>  "yellow",
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Winking fat comma';
 
 # Enterprise
 $code = <<'__CODE__';
@@ -122,13 +149,13 @@ my @shopping_list = (
    ('tonic'    )x!! $cupboard{gin},
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Enterprise';
 
 # Key of truth
 $code = <<'__CODE__';
 my $true  = 0+!! 'a string';
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Key of truth';
 
 # Abbott and Costello + Leaning Abbott and Costello
 $code = <<'__CODE__';
@@ -136,11 +163,16 @@ my @shopping_list = (
     'bread',
     'milk',
     $this ||(),
+    'apples'
+);
+my @shopping_list = (
+    'bread',
+    'milk',
     $that //(),
     'apples'
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Abbot and Costello';
 
 done_testing;
 

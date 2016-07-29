@@ -44,29 +44,28 @@ sub violates {
 
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'     => qr/\s0\+\s/,        #\b so it does not match K.O.T.
-        'Baby Cart' => qr/\@\{\[.*\]\}/,
-        'Bang Bang' => qr/!!/,
-        'Inchworm'  => qr/~~/,
-        'Inchworm on a stick'         => qr/~-|-~/,
-        'Space Station'               => qr/-\+-/,
-        'Goatse'                      => qr/=\(.*\)=/,
-        'Flaming X-Wing'              => qr/=<.*>=~/,
-        'Kite'                        => qr/~~<>/,
-        'Ornate Double Edged Sword'   => qr/<<m=~m>>/,
-        'Flathead'                    => qr/-=!!|-=!/,
-        'Phillips'                    => qr/\+=!!|\+=!/,
-        'Torx'                        => qr/\*=!!|\*=!/,
-        'Pozidriv'                    => qr/x=!!|x=!/,
-        'Winking fat comma'           => qr/,=>/,
-        'Enterprise'                  => qr/\(.*\)x!!/,
-        'Key of truth'                => qr/0\+!!/,
-        'Abbott and Costello'         => qr/\|\|\(\)/,
-        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
+        'Venus'     => \&_venus,
+        'Baby Cart' => \&_baby_cart,
+        'Bang Bang' => \&_bang_bang,
+        'Inchworm'  => \&_inchworm,
+        'Inchworm on a stick'         => \&_inchworm_on_a_stick,
+        'Space Station'               => \&_space_station,
+        'Goatse'                      => \&_goatse,
+        'Flaming X-Wing'              => \&_flaming_x_wing,
+        'Kite'                        => \&_kite,
+        'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
+        'Flathead'                    => \&_flathead,
+        'Phillips'                    => \&_phillips,
+        'Torx'                        => \&_torx,
+        'Pozidriv'                    => \&_pozidriv,
+        'Winking fat comma'           => \&_winking_fat_comma,
+        'Enterprise'                  => \&_enterprise,
+        'Key of truth'                => \&_key_of_truth,
+        'Abbott and Costello'         => \&_abbott_and_costello,
     );
 
     for my $policy ( keys %violations ) {
-        if ( $element =~ $violations{$policy} ) {
+        if ( $violations{$policy}->($element) ) {
             return $self->violation( $DESCRIPTION . " $policy ",
                 $EXPLANATION, $element );
         }
@@ -75,6 +74,172 @@ sub violates {
     return;    # No matches return i.e. no violations
 }
 
+sub _venus {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if $child->previous_sibling eq '0';
+        return 1 if $child->next_sibling eq '0';
+    }
+}
+
+sub _baby_cart {
+    for my $child ($_[0]->children)
+    {
+        if (ref($child) eq 'PPI::Token::Cast' ) {
+            return 1 if $child->snext_sibling =~ m/\{\s*?\[/;
+        }
+        if (ref($child) eq 'PPI::Token::Quote::Double') {
+            return 1 if $child =~ m/@\{\s*?\[/;
+        };
+
+    }
+}
+
+sub _bang_bang {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+        return 1 if $child eq '!' && $child->snext_sibling eq '!';
+    }
+}
+
+sub _inchworm {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+        return 1 if $child eq '~~';
+        return 1 if $child eq '~' && $child->snext_sibling eq '~';
+    }
+}
+
+sub _inchworm_on_a_stick {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if $child eq '~' && $child->snext_sibling eq '-';
+        return 1 if $child eq '-' && $child->snext_sibling eq '~';
+    }
+}
+
+sub _space_station {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if $child eq '-' 
+                 && $child->snext_sibling eq '+' 
+                 && $child->snext_sibling->snext_sibling eq '-';
+    }
+}
+
+sub _goatse {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Structure::List';
+        return 1 if $child->sprevious_sibling eq '=' && $child->snext_sibling eq '=';
+    }
+}
+
+sub _flaming_x_wing {
+    for my $child ($_[0]->children)
+    {
+
+        next unless ref($child) eq 'PPI::Token::QuoteLike::Readline';
+        return 1 if $child->sprevious_sibling eq '='
+                 && $child->snext_sibling eq '=~';
+    }
+}
+
+sub _kite {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+        return 1 if $child eq '~~'
+                 && $child->snext_sibling eq '<>';
+    }
+}
+
+sub _ornate_double_edged_sword {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '<<m';
+        return 1 if $child->snext_sibling eq '=~'
+                 && $child->snext_sibling->snext_sibling eq 'm>>';
+    }
+}
+
+sub _flathead {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '-=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
+
+sub _phillips {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '+=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
+
+sub _torx {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '*=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
+
+sub _pozidriv {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq 'x=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
+
+sub _winking_fat_comma {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator'
+                     && $child  eq ',';
+        return 1 if $child->snext_sibling eq '=>';
+    }
+}
+sub _enterprise {
+    for my $child ($_[0]->children)
+    {
+        next unless $child->class eq 'PPI::Structure::List';
+        return 1 if $child->snext_sibling eq 'x'
+        && $child->snext_sibling->snext_sibling eq '!'
+        && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
+    }
+}
+
+sub _key_of_truth {
+    for my $child ($_[0]->children)
+    {
+        next unless $child->class eq 'PPI::Token::Number';
+        return 1 if $child eq '0'
+                 && $child->snext_sibling eq '+'
+                 && $child->snext_sibling->snext_sibling eq '!'
+                 && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
+    }
+}
+
+sub _abbott_and_costello {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if ($child eq '||' || $child eq '//')
+                && $child->snext_sibling->class eq 'PPI::Structure::List';
+    }
+}
+
 1;
-
-
