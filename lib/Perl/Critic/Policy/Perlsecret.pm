@@ -56,7 +56,7 @@ sub violates {
         'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
         'Flathead'                    => \&_flathead,
         'Phillips'                    => \&_phillips,
-#        'Torx'                        => qr/\*=!!|\*=!/,
+        'Torx'                        => \&_torx,
 #        'Pozidriv'                    => qr/x=!!|x=!/,
 #        'Winking fat comma'           => qr/,=>/,
 #        'Enterprise'                  => qr/\(.*\)x!!/,
@@ -184,6 +184,14 @@ sub _phillips {
     for my $child ($_[0]->children)
     {
         next unless $child eq '+=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
+
+sub _torx {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq '*=';
         return 1 if $child->snext_sibling eq '!';
     }
 }
