@@ -57,7 +57,7 @@ sub violates {
         'Flathead'                    => \&_flathead,
         'Phillips'                    => \&_phillips,
         'Torx'                        => \&_torx,
-#        'Pozidriv'                    => qr/x=!!|x=!/,
+        'Pozidriv'                    => \&_pozidriv,
 #        'Winking fat comma'           => qr/,=>/,
 #        'Enterprise'                  => qr/\(.*\)x!!/,
 #        'Key of truth'                => qr/0\+!!/,
@@ -196,5 +196,12 @@ sub _torx {
     }
 }
 
+sub _pozidriv {
+    for my $child ($_[0]->children)
+    {
+        next unless $child eq 'x=';
+        return 1 if $child->snext_sibling eq '!';
+    }
+}
 
 1;
