@@ -61,8 +61,7 @@ sub violates {
         'Winking fat comma'           => \&_winking_fat_comma,
         'Enterprise'                  => \&_enterprise,
         'Key of truth'                => \&_key_of_truth,
-#        'Abbott and Costello'         => qr/\|\|\(\)/,
-#        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
+        'Abbott and Costello'         => \&_abbott_and_costello,
     );
 
     for my $policy ( keys %violations ) {
@@ -230,6 +229,16 @@ sub _key_of_truth {
                  && $child->snext_sibling eq '+'
                  && $child->snext_sibling->snext_sibling eq '!'
                  && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
+    }
+}
+
+sub _abbott_and_costello {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator';
+
+        return 1 if ($child eq '||' || $child eq '//')
+                && $child->snext_sibling->class eq 'PPI::Structure::List';
     }
 }
 

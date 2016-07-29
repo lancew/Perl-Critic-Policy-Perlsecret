@@ -157,20 +157,22 @@ my $true  = 0+!! 'a string';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 1, '1 x Key of truth';
 
-=pod
-
 # Abbott and Costello + Leaning Abbott and Costello
 $code = <<'__CODE__';
 my @shopping_list = (
     'bread',
     'milk',
     $this ||(),
+    'apples'
+);
+my @shopping_list = (
+    'bread',
+    'milk',
     $that //(),
     'apples'
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
-=cut
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Abbot and Costello';
 
 done_testing;
 
