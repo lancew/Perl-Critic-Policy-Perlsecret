@@ -107,14 +107,14 @@ $x -=!  $y;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Flathead';
 
-=pod
 # Phillips.
 $code = <<'__CODE__';
-$x +=!! $y
-$x +=!  $y
+$x +=!! $y;
+$x +=!  $y;
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Phillips';
 
+=pod
 # Torx.
 $code = <<'__CODE__';
 $x *=!! $y
