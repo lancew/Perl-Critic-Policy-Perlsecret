@@ -1,5 +1,6 @@
 Revision history for Perl-Critic-Policy-Perlsecret
-
+v0.0.5  2016-07-29
+        - Rewrite using PPI properly
 v0.0.3  2014-09-11
         - Migrating to Dist::Zilla
 v0.0.2  2014-09-09
