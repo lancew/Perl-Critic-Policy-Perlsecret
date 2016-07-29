@@ -59,7 +59,7 @@ sub violates {
         'Torx'                        => \&_torx,
         'Pozidriv'                    => \&_pozidriv,
         'Winking fat comma'           => \&_winking_fat_comma,
-#        'Enterprise'                  => qr/\(.*\)x!!/,
+        'Enterprise'                  => \&_enterprise,
 #        'Key of truth'                => qr/0\+!!/,
 #        'Abbott and Costello'         => qr/\|\|\(\)/,
 #        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
@@ -212,4 +212,14 @@ sub _winking_fat_comma {
         return 1 if $child->snext_sibling eq '=>';
     }
 }
+sub _enterprise {
+    for my $child ($_[0]->children)
+    {
+        next unless $child->class eq 'PPI::Structure::List';
+        return 1 if $child->snext_sibling eq 'x'
+        && $child->snext_sibling->snext_sibling eq '!'
+        && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
+    }
+}
+
 1;

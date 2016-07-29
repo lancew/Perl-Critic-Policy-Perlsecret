@@ -138,7 +138,6 @@ $code = <<'__CODE__';
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 1, '1 x Winking fat comma';
 
-=pod
 # Enterprise
 $code = <<'__CODE__';
 my @shopping_list = (
@@ -150,7 +149,8 @@ my @shopping_list = (
    ('tonic'    )x!! $cupboard{gin},
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Enterprise';
+=pod
 
 # Key of truth
 $code = <<'__CODE__';
