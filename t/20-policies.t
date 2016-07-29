@@ -128,7 +128,6 @@ $x x=!  $y;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Pozidriv';
 
-=pod
 # Winking fat comma
 $code = <<'__CODE__';
 %hash = (
@@ -137,8 +136,9 @@ $code = <<'__CODE__';
   BANANA  ,=>  "yellow",
 );
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 2;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Winking fat comma';
 
+=pod
 # Enterprise
 $code = <<'__CODE__';
 my @shopping_list = (

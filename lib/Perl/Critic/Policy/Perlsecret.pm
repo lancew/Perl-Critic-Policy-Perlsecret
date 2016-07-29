@@ -58,7 +58,7 @@ sub violates {
         'Phillips'                    => \&_phillips,
         'Torx'                        => \&_torx,
         'Pozidriv'                    => \&_pozidriv,
-#        'Winking fat comma'           => qr/,=>/,
+        'Winking fat comma'           => \&_winking_fat_comma,
 #        'Enterprise'                  => qr/\(.*\)x!!/,
 #        'Key of truth'                => qr/0\+!!/,
 #        'Abbott and Costello'         => qr/\|\|\(\)/,
@@ -204,4 +204,12 @@ sub _pozidriv {
     }
 }
 
+sub _winking_fat_comma {
+    for my $child ($_[0]->children)
+    {
+        next unless ref($child) eq 'PPI::Token::Operator'
+                     && $child  eq ',';
+        return 1 if $child->snext_sibling eq '=>';
+    }
+}
 1;
