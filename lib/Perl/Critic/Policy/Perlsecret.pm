@@ -60,7 +60,7 @@ sub violates {
         'Pozidriv'                    => \&_pozidriv,
         'Winking fat comma'           => \&_winking_fat_comma,
         'Enterprise'                  => \&_enterprise,
-#        'Key of truth'                => qr/0\+!!/,
+        'Key of truth'                => \&_key_of_truth,
 #        'Abbott and Costello'         => qr/\|\|\(\)/,
 #        'Leaning Abbott and Costello' => qr/\/\/\(\)/,
     );
@@ -219,6 +219,17 @@ sub _enterprise {
         return 1 if $child->snext_sibling eq 'x'
         && $child->snext_sibling->snext_sibling eq '!'
         && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
+    }
+}
+
+sub _key_of_truth {
+    for my $child ($_[0]->children)
+    {
+        next unless $child->class eq 'PPI::Token::Number';
+        return 1 if $child eq '0'
+                 && $child->snext_sibling eq '+'
+                 && $child->snext_sibling->snext_sibling eq '!'
+                 && $child->snext_sibling->snext_sibling->snext_sibling eq '!'
     }
 }
 

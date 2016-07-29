@@ -150,13 +150,14 @@ my @shopping_list = (
 );
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 1, '1 x Enterprise';
-=pod
 
 # Key of truth
 $code = <<'__CODE__';
 my $true  = 0+!! 'a string';
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1;
+is pcritique( 'Perlsecret', \$code ), 1, '1 x Key of truth';
+
+=pod
 
 # Abbott and Costello + Leaning Abbott and Costello
 $code = <<'__CODE__';
