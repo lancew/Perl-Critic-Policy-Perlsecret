@@ -33,6 +33,9 @@ $code = <<'__CODE__';
 my $true  = !! 'a string';   # now 1
 # ignore this comment !!
 my $true2 = ! ! 'another string';
+# This should NOT be detected as bang bang
+# Test for issue #5
+my $highlight =~ s!^\s+!!;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Bang Bang';
 
