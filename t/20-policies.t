@@ -148,8 +148,9 @@ my @shopping_list = (
    ('cherries' )x!! ( $cupboard{cherries} < 20 ),
    ('tonic'    )x!! $cupboard{gin},
 );
+( return => $params{return} ) x !!$params{return};
 __CODE__
-is pcritique( 'Perlsecret', \$code ), 1, '1 x Enterprise';
+is pcritique( 'Perlsecret', \$code ), 2, '2 x Enterprise';
 
 # Key of truth
 $code = <<'__CODE__';
