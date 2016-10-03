@@ -44,10 +44,10 @@ sub violates {
 
     # Eskimo Greeting skipped as only used in one liners
     my %violations = (
-        'Venus'     => \&_venus,
-        'Baby Cart' => \&_baby_cart,
-        'Bang Bang' => \&_bang_bang,
-        'Inchworm'  => \&_inchworm,
+        'Venus'                       => \&_venus,
+        'Baby Cart'                   => \&_baby_cart,
+        'Bang Bang'                   => \&_bang_bang,
+        'Inchworm'                    => \&_inchworm,
         'Inchworm on a stick'         => \&_inchworm_on_a_stick,
         'Space Station'               => \&_space_station,
         'Goatse'                      => \&_goatse,
