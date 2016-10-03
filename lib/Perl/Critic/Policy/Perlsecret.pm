@@ -25,6 +25,28 @@ our $VERSION = '0.0.5';
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
 
+# Eskimo Greeting skipped as only used in one liners
+Readonly::Hash my %default_violations => (
+    'Venus'                       => \&_venus,
+    'Baby Cart'                   => \&_baby_cart,
+    'Bang Bang'                   => \&_bang_bang,
+    'Inchworm'                    => \&_inchworm,
+    'Inchworm on a Stick'         => \&_inchworm_on_a_stick,
+    'Space Station'               => \&_space_station,
+    'Goatse'                      => \&_goatse,
+    'Flaming X-Wing'              => \&_flaming_x_wing,
+    'Kite'                        => \&_kite,
+    'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
+    'Flathead'                    => \&_flathead,
+    'Phillips'                    => \&_phillips,
+    'Torx'                        => \&_torx,
+    'Pozidriv'                    => \&_pozidriv,
+    'Winking Fat Comma'           => \&_winking_fat_comma,
+    'Enterprise'                  => \&_enterprise,
+    'Key of Truth'                => \&_key_of_truth,
+    'Abbott and Costello'         => \&_abbott_and_costello,
+);
+
 sub default_severity {
     return $Perl::Critic::Utils::SEVERITY_HIGHEST;
 }
@@ -42,28 +64,9 @@ sub applies_to {
 sub violates {
     my ( $self, $element, $doc ) = @_;
 
-    # Eskimo Greeting skipped as only used in one liners
-    my %violations = (
-        'Venus'                       => \&_venus,
-        'Baby Cart'                   => \&_baby_cart,
-        'Bang Bang'                   => \&_bang_bang,
-        'Inchworm'                    => \&_inchworm,
-        'Inchworm on a Stick'         => \&_inchworm_on_a_stick,
-        'Space Station'               => \&_space_station,
-        'Goatse'                      => \&_goatse,
-        'Flaming X-Wing'              => \&_flaming_x_wing,
-        'Kite'                        => \&_kite,
-        'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
-        'Flathead'                    => \&_flathead,
-        'Phillips'                    => \&_phillips,
-        'Torx'                        => \&_torx,
-        'Pozidriv'                    => \&_pozidriv,
-        'Winking Fat Comma'           => \&_winking_fat_comma,
-        'Enterprise'                  => \&_enterprise,
-        'Key of Truth'                => \&_key_of_truth,
-        'Abbott and Costello'         => \&_abbott_and_costello,
     );
 
+    my %violations = %default_violations;
     for my $policy ( keys %violations ) {
         if ( $violations{$policy}->($element) ) {
             return $self->violation( $DESCRIPTION . " $policy ",
