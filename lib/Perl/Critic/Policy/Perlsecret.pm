@@ -48,7 +48,7 @@ sub violates {
         'Baby Cart'                   => \&_baby_cart,
         'Bang Bang'                   => \&_bang_bang,
         'Inchworm'                    => \&_inchworm,
-        'Inchworm on a stick'         => \&_inchworm_on_a_stick,
+        'Inchworm on a Stick'         => \&_inchworm_on_a_stick,
         'Space Station'               => \&_space_station,
         'Goatse'                      => \&_goatse,
         'Flaming X-Wing'              => \&_flaming_x_wing,
@@ -58,9 +58,9 @@ sub violates {
         'Phillips'                    => \&_phillips,
         'Torx'                        => \&_torx,
         'Pozidriv'                    => \&_pozidriv,
-        'Winking fat comma'           => \&_winking_fat_comma,
+        'Winking Fat Comma'           => \&_winking_fat_comma,
         'Enterprise'                  => \&_enterprise,
-        'Key of truth'                => \&_key_of_truth,
+        'Key of Truth'                => \&_key_of_truth,
         'Abbott and Costello'         => \&_abbott_and_costello,
     );
 
