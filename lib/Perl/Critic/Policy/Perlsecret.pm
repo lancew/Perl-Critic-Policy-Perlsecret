@@ -18,7 +18,7 @@ use parent 'Perl::Critic::Policy';
 
 use Carp;
 use Perl::Critic::Utils;
-
+use List::Util 'first';
 
 our $VERSION = '0.0.5';
 
@@ -61,12 +61,61 @@ sub applies_to {
     );
 }
 
+sub supported_parameters {
+    return (
+        {
+            name           => 'allow_secrets',
+            description    => q<A list of perlsecrets to allow.>,
+            default_string => '',
+        },
+
+        {
+            name           => 'disallow_secrets',
+            description    => q<A list of perlsecrets to disallow (default: all perlsecrets).>,
+            default_string =>
+                'Venus, Baby Cart, Bang Bang, Inchworm, Inchworm on a Stick, ' .
+                'Space Station, Goatse, Flaming X-Wing, Kite, '                .
+                'Ornate Double Edged Sword, Flathead, Phillips, Torx, '        .
+                'Pozidriv, Winking Fat Comma, Enterprise, Key of Truth, '      .
+                'Abbott and Costello',
+        },
+    );
+}
+
+my $SPLIT_RE = qr/\s*,\s*/;
+
+sub read_config_list {
+    my ( $self, $str ) = @_;
+
+    my @values = map {
+        ( my $new = $_ ) =~ s/^\s+|\s+$//;
+        $new;
+    } split $SPLIT_RE, $str;
+
+    return @values;
+}
+
 sub violates {
     my ( $self, $element, $doc ) = @_;
 
+    my @disallowed = $self->read_config_list(
+        $self->{'_disallow_secrets'}
+    );
+
+    my @allowed = $self->read_config_list(
+        $self->{'_allow_secrets'}
     );
 
     my %violations = %default_violations;
+    foreach my $secret (@disallowed) {
+        if ( ! exists $default_violations{$secret} ) {
+            croak("$secret is not a known secret");
+        }
+
+        first { $secret eq $_ } @allowed
+            and delete $violations{$secret};
+    }
+
     for my $policy ( keys %violations ) {
         if ( $violations{$policy}->($element) ) {
             return $self->violation( $DESCRIPTION . " $policy ",
