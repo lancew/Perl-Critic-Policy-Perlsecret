@@ -20,7 +20,7 @@ use Carp;
 use Perl::Critic::Utils;
 use List::Util 'first';
 
-our $VERSION = '0.0.5';
+our $VERSION = '0.0.7';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
@@ -181,8 +181,8 @@ sub _space_station {
     {
         next unless ref($child) eq 'PPI::Token::Operator';
 
-        return 1 if $child eq '-' 
-                 && $child->snext_sibling eq '+' 
+        return 1 if $child eq '-'
+                 && $child->snext_sibling eq '+'
                  && $child->snext_sibling->snext_sibling eq '-';
     }
 }
