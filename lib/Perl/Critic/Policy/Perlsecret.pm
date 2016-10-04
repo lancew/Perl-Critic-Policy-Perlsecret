@@ -18,12 +18,34 @@ use parent 'Perl::Critic::Policy';
 
 use Carp;
 use Perl::Critic::Utils;
-
+use List::Util 'first';
 
 our $VERSION = '0.0.5';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
+
+# Eskimo Greeting skipped as only used in one liners
+Readonly::Hash my %default_violations => (
+    'Venus'                       => \&_venus,
+    'Baby Cart'                   => \&_baby_cart,
+    'Bang Bang'                   => \&_bang_bang,
+    'Inchworm'                    => \&_inchworm,
+    'Inchworm on a Stick'         => \&_inchworm_on_a_stick,
+    'Space Station'               => \&_space_station,
+    'Goatse'                      => \&_goatse,
+    'Flaming X-Wing'              => \&_flaming_x_wing,
+    'Kite'                        => \&_kite,
+    'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
+    'Flathead'                    => \&_flathead,
+    'Phillips'                    => \&_phillips,
+    'Torx'                        => \&_torx,
+    'Pozidriv'                    => \&_pozidriv,
+    'Winking Fat Comma'           => \&_winking_fat_comma,
+    'Enterprise'                  => \&_enterprise,
+    'Key of Truth'                => \&_key_of_truth,
+    'Abbott and Costello'         => \&_abbott_and_costello,
+);
 
 sub default_severity {
     return $Perl::Critic::Utils::SEVERITY_HIGHEST;
@@ -39,30 +61,60 @@ sub applies_to {
     );
 }
 
+sub supported_parameters {
+    return (
+        {
+            name           => 'allow_secrets',
+            description    => q<A list of perlsecrets to allow.>,
+            default_string => '',
+        },
+
+        {
+            name           => 'disallow_secrets',
+            description    => q<A list of perlsecrets to disallow (default: all perlsecrets).>,
+            default_string =>
+                'Venus, Baby Cart, Bang Bang, Inchworm, Inchworm on a Stick, ' .
+                'Space Station, Goatse, Flaming X-Wing, Kite, '                .
+                'Ornate Double Edged Sword, Flathead, Phillips, Torx, '        .
+                'Pozidriv, Winking Fat Comma, Enterprise, Key of Truth, '      .
+                'Abbott and Costello',
+        },
+    );
+}
+
+my $SPLIT_RE = qr/\s*,\s*/;
+
+sub read_config_list {
+    my ( $self, $str ) = @_;
+
+    my @values = map {
+        ( my $new = $_ ) =~ s/^\s+|\s+$//;
+        $new;
+    } split $SPLIT_RE, $str;
+
+    return @values;
+}
+
 sub violates {
     my ( $self, $element, $doc ) = @_;
 
-    # Eskimo Greeting skipped as only used in one liners
-    my %violations = (
-        'Venus'     => \&_venus,
-        'Baby Cart' => \&_baby_cart,
-        'Bang Bang' => \&_bang_bang,
-        'Inchworm'  => \&_inchworm,
-        'Inchworm on a stick'         => \&_inchworm_on_a_stick,
-        'Space Station'               => \&_space_station,
-        'Goatse'                      => \&_goatse,
-        'Flaming X-Wing'              => \&_flaming_x_wing,
-        'Kite'                        => \&_kite,
-        'Ornate Double Edged Sword'   => \&_ornate_double_edged_sword,
-        'Flathead'                    => \&_flathead,
-        'Phillips'                    => \&_phillips,
-        'Torx'                        => \&_torx,
-        'Pozidriv'                    => \&_pozidriv,
-        'Winking fat comma'           => \&_winking_fat_comma,
-        'Enterprise'                  => \&_enterprise,
-        'Key of truth'                => \&_key_of_truth,
-        'Abbott and Costello'         => \&_abbott_and_costello,
+    my @disallowed = $self->read_config_list(
+        $self->{'_disallow_secrets'}
     );
+
+    my @allowed = $self->read_config_list(
+        $self->{'_allow_secrets'}
+    );
+
+    my %violations = %default_violations;
+    foreach my $secret (@disallowed) {
+        if ( ! exists $default_violations{$secret} ) {
+            croak("$secret is not a known secret");
+        }
+
+        first { $secret eq $_ } @allowed
+            and delete $violations{$secret};
+    }
 
     for my $policy ( keys %violations ) {
         if ( $violations{$policy}->($element) ) {
