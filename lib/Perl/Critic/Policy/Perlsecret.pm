@@ -102,18 +102,23 @@ sub violates {
         $self->{'_disallow_secrets'}
     );
 
+    @disallowed
+        or @disallowed = keys %default_violations;
+
     my @allowed = $self->read_config_list(
         $self->{'_allow_secrets'}
     );
 
-    my %violations = %default_violations;
+    my %violations;
     foreach my $secret (@disallowed) {
         if ( ! exists $default_violations{$secret} ) {
             croak("$secret is not a known secret");
         }
 
         first { $secret eq $_ } @allowed
-            and delete $violations{$secret};
+            and next;
+
+        $violations{$secret} = $default_violations{$secret};
     }
 
     for my $policy ( keys %violations ) {
