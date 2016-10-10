@@ -1,14 +1,5 @@
 package Perl::Critic::Policy::Perlsecret;
 # ABSTRACT: Prevent perlsecrets entering your codebase
-=pod
-
-=encoding UTF-8
-
-=head1 NAME
-
-Perl::Critic::Policy::Perlsecret - Prevent perlsecrets entering your codebase
-
-=cut
 
 use 5.006001;
 use strict;
@@ -300,3 +291,46 @@ sub _abbott_and_costello {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Perl::Critic::Policy::Perlsecret - Prevent perlsecrets entering your codebase
+
+=head1 SYNOPSIS
+
+    # in your .perlcriticrc
+    [Perlsecret]
+
+    # overriding things
+    [Perlsecret]
+    allow_secrets = Bang Bang, Venus
+
+=head1 DESCRIPTION
+
+This policy checks for L<perlsecret> operators in your code and warns you
+about them.
+
+You can override the secrets that are allowed or disallowed using the
+parameters C<allow_secrets> and C<disallow_secrets>. The default is to
+simply disallow everything.
+
+Notice the secrets are capitalized correctly ("Ornate Double-Bladed Sword",
+not "Ornate double-bladed sword").
+
+    [Perlsecret]
+    disallow_secrets = Flathead, Phillips, Pozidriv, Torx, Enterprise
+
+This provides the list to disallow.
+
+    [Perlsecret]
+    allow_secrets = Bang Bang
+
+You can provide both, in which case it will start with the disallow list
+you provided as the default and then allow everything in the allow list.
+(There isn't much value to provide both of these.)
