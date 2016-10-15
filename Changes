@@ -1,5 +1,9 @@
 Revision history for Perl-Critic-Policy-Perlsecret
 
+v0.0.8  2016-10-15
+        - Added Pod.
+        - Bug fix with new disallow code.
+        - Typo in description removed.
 v0.0.7  2016-10-04
         - Config allows overriding so specific secrets can be allowed.
 v0.0.6  2016-07-29

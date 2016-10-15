@@ -11,10 +11,10 @@ use Carp;
 use Perl::Critic::Utils;
 use List::Util 'first';
 
-our $VERSION = '0.0.7';
+our $VERSION = '0.0.8';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
-Readonly::Scalar my $EXPLANATION => 'Perlsecret detected: %s';
+Readonly::Scalar my $EXPLANATION => 'Perlsecret detected.';
 
 # Eskimo Greeting skipped as only used in one liners
 Readonly::Hash my %default_violations => (
