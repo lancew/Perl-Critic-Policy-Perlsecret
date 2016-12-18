@@ -76,7 +76,6 @@ $n = ( $b ) = "abababab" =~ /a/g;
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 3, '3 x Goatse';
 
-
 # Flaming X-Wing
 $code = <<'__CODE__';
 @data{@fields} =<>=~ $regexp;
@@ -175,6 +174,9 @@ my @shopping_list = (
     $that //(),
     'apples'
 );
+return $self->_has_session
+    || ( $self->cookie($engine->cookie_name )
+    && !$self->has_destroyed_session );
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Abbot and Costello';
 
