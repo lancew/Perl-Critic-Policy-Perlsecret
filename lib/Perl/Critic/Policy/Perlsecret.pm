@@ -121,6 +121,8 @@ sub _venus {
     for my $child ( $_[0]->children ) {
         next unless ref($child) eq 'PPI::Token::Operator';
 
+        next unless $child eq '+';
+
         return 1 if $child->previous_sibling eq '0';
         return 1 if $child->next_sibling eq '0';
     }

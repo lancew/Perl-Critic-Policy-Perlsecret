@@ -10,6 +10,7 @@ $code = <<'__CODE__';
     print 0+ '23a';
     #print +0 '23a'; should not be detected as is a comment
     print +0 '23a';
+    is(scalar @vars, 0, 'Empty list');
 }
 __CODE__
 is pcritique( 'Perlsecret', \$code ), 2, '2 x Venus expected';
