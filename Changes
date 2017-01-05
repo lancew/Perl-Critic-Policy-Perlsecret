@@ -1,4 +1,7 @@
 Revision history for Perl-Critic-Policy-Perlsecret
+v0.0.11 2017-01-05
+        Fix for false positives in Venus detection identified by otrosien
+        Issue #16
 v0.0.10 2016-10-19
         Fix for false positive Abbott and Costello bug identified by Sawyer
         Issue #14 from Github

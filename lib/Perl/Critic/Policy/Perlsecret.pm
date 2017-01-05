@@ -11,7 +11,7 @@ use Carp;
 use Perl::Critic::Utils;
 use List::Util 'first';
 
-our $VERSION = '0.0.10';
+our $VERSION = '0.0.11';
 
 Readonly::Scalar my $DESCRIPTION => 'Perlsecret risk.';
 Readonly::Scalar my $EXPLANATION => 'Perlsecret detected.';
